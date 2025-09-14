@@ -1,3 +1,11 @@
+
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "threat-map",
+      "description": "A world map with glowing points indicating cyber threat origins.",
+      "imageUrl": "https://picsum.photos/seed/threatmap/1200/600",
+      "imageHint": "world map"
+    }
+  ]
 }
