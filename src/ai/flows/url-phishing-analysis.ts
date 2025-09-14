@@ -12,7 +12,7 @@
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 import {
-  PhishingEmailAnalysisOutput,
+  type PhishingEmailAnalysisOutput,
   PhishingEmailAnalysisOutputSchema,
 } from './phishing-email-analysis';
 

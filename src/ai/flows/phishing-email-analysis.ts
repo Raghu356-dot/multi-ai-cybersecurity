@@ -21,7 +21,7 @@ export type PhishingEmailAnalysisInput = z.infer<
   typeof PhishingEmailAnalysisInputSchema
 >;
 
-const PhishingEmailAnalysisOutputSchema = z.object({
+export const PhishingEmailAnalysisOutputSchema = z.object({
   isPhishing: z
     .boolean()
     .describe(
