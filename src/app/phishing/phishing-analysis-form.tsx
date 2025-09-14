@@ -1,6 +1,6 @@
 "use client";
 
-import { useFormState, useFormStatus } from "react-dom";
+import { useActionState, useFormStatus } from "react-dom";
 import { Loader2, Send, AlertTriangle, CheckCircle2, Bot } from "lucide-react";
 
 import { analyzeEmailAction } from "@/app/actions";
@@ -31,7 +31,7 @@ function SubmitButton() {
 
 export function PhishingAnalysisForm() {
   const initialState = { data: null, error: null };
-  const [state, formAction] = useFormState(analyzeEmailAction, initialState);
+  const [state, formAction] = useActionState(analyzeEmailAction, initialState);
   const formRef = useRef<HTMLFormElement>(null);
   const { toast } = useToast();
 

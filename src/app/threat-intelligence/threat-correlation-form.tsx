@@ -1,6 +1,6 @@
 "use client";
 
-import { useFormState, useFormStatus } from "react-dom";
+import { useActionState, useFormStatus } from "react-dom";
 import { Loader2, GitBranch, Bot, FileWarning } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { useToast } from "@/hooks/use-toast";
@@ -31,7 +31,7 @@ function SubmitButton() {
 
 export function ThreatCorrelationForm() {
   const initialState = { data: null, error: null };
-  const [state, formAction] = useFormState(correlateThreatsAction, initialState);
+  const [state, formAction] = useActionState(correlateThreatsAction, initialState);
   const formRef = useRef<HTMLFormElement>(null);
   const { toast } = useToast();
 
