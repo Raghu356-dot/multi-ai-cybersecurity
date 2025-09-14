@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState, useFormStatus } from "react-dom";
+import { useActionState } from "react";
+import { useFormStatus } from "react-dom";
 import { Loader2, Send, AlertTriangle, CheckCircle2, Bot } from "lucide-react";
 
 import { analyzeEmailAction } from "@/app/actions";
