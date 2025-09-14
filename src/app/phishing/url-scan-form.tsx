@@ -2,11 +2,11 @@
 
 import { useActionState, useEffect, useRef } from "react";
 import { useFormStatus } from "react-dom";
-import { Loader2, Send, AlertTriangle, CheckCircle2, Bot } from "lucide-react";
+import { Loader2, ScanLine, AlertTriangle, CheckCircle2, Bot } from "lucide-react";
 
-import { analyzeEmailAction } from "@/app/actions";
+import { analyzeUrlAction } from "@/app/actions";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Progress } from "@/components/ui/progress";
@@ -18,20 +18,20 @@ function SubmitButton() {
     <Button type="submit" disabled={pending}>
       {pending ? (
         <>
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Analyzing...
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Scanning...
         </>
       ) : (
         <>
-          <Send className="mr-2 h-4 w-4" /> Analyze Email
+          <ScanLine className="mr-2 h-4 w-4" /> Scan URL
         </>
       )}
     </Button>
   );
 }
 
-export function PhishingAnalysisForm() {
+export function UrlScanForm() {
   const initialState = { data: null, error: null };
-  const [state, formAction] = useActionState(analyzeEmailAction, initialState);
+  const [state, formAction] = useActionState(analyzeUrlAction, initialState);
   const formRef = useRef<HTMLFormElement>(null);
   const { toast } = useToast();
 
@@ -43,8 +43,8 @@ export function PhishingAnalysisForm() {
         description: state.error,
       });
     }
-    if(state.data){
-        formRef.current?.reset();
+    if (state.data) {
+      formRef.current?.reset();
     }
   }, [state, toast]);
 
@@ -52,20 +52,23 @@ export function PhishingAnalysisForm() {
     <div className="grid gap-8 md:grid-cols-2">
       <Card>
         <CardHeader>
-          <CardTitle className="font-headline">Email Content</CardTitle>
+          <CardTitle className="font-headline">Scan Website URL</CardTitle>
           <CardDescription>
-            Paste the full content of the suspicious email below.
+            Enter a URL to scan it for potential phishing threats.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form action={formAction} ref={formRef} className="space-y-4">
-            <Textarea
-              name="emailContent"
-              placeholder="From: suspicious@example.com..."
-              className="min-h-[300px] font-code text-sm"
-              required
-            />
-            <SubmitButton />
+            <div className="flex gap-2">
+                <Input
+                name="url"
+                type="url"
+                placeholder="https://example.com"
+                className="font-code text-sm"
+                required
+                />
+                <SubmitButton />
+            </div>
           </form>
         </CardContent>
       </Card>
@@ -78,14 +81,14 @@ export function PhishingAnalysisForm() {
         <CardContent className="space-y-4">
           {!state.data && !useFormStatus().pending && (
             <div className="flex flex-col items-center justify-center text-center text-muted-foreground p-8 border-2 border-dashed rounded-lg h-full">
-                <Bot className="h-12 w-12 mb-4" />
-                <p>Waiting for submission...</p>
+              <Bot className="h-12 w-12 mb-4" />
+              <p>Waiting for URL submission...</p>
             </div>
           )}
           {useFormStatus().pending && (
             <div className="flex flex-col items-center justify-center text-center text-muted-foreground p-8 border-2 border-dashed rounded-lg h-full">
-                <Loader2 className="h-12 w-12 mb-4 animate-spin text-primary" />
-                <p>AI is analyzing the content...</p>
+              <Loader2 className="h-12 w-12 mb-4 animate-spin text-primary" />
+              <p>AI is analyzing the URL...</p>
             </div>
           )}
           {state.data && (
@@ -98,11 +101,11 @@ export function PhishingAnalysisForm() {
                 )}
                 <AlertTitle className="font-headline">
                   {state.data.isPhishing
-                    ? "Phishing Attempt Detected"
-                    : "Email Appears Safe"}
+                    ? "Phishing URL Detected"
+                    : "URL Appears Safe"}
                 </AlertTitle>
                 <AlertDescription>
-                    The model determined this with a confidence score of {Math.round(state.data.confidenceScore * 100)}%.
+                  The model determined this with a confidence score of {Math.round(state.data.confidenceScore * 100)}%.
                 </AlertDescription>
               </Alert>
               

@@ -6,6 +6,10 @@ import {
   PhishingEmailAnalysisOutput,
 } from "@/ai/flows/phishing-email-analysis";
 import {
+  analyzeUrlForPhishing,
+  UrlPhishingAnalysisOutput,
+} from "@/ai/flows/url-phishing-analysis";
+import {
   transactionFraudCheck,
   TransactionFraudCheckOutput,
 } from "@/ai/flows/transaction-fraud-check";
@@ -46,6 +50,40 @@ export async function analyzeEmailAction(
     return { data: null, error: "An error occurred during analysis." };
   }
 }
+
+export type UrlScanState = {
+    data: UrlPhishingAnalysisOutput | null;
+    error: string | null;
+}
+
+const urlScanSchema = z.object({
+    url: z.string().url("Please enter a valid URL."),
+});
+
+export async function analyzeUrlAction(
+    prevState: UrlScanState,
+    formData: FormData
+): Promise<UrlScanState> {
+    const validatedFields = urlScanSchema.safeParse({
+        url: formData.get("url"),
+    });
+
+    if (!validatedFields.success) {
+        return {
+            data: null,
+            error: validatedFields.error.flatten().fieldErrors.url?.[0] || "Invalid input.",
+        };
+    }
+
+    try {
+        const result = await analyzeUrlForPhishing(validatedFields.data);
+        return { data: result, error: null };
+    } catch (e) {
+        console.error(e);
+        return { data: null, error: "An error occurred during URL analysis." };
+    }
+}
+
 
 export type FraudState = {
   data: TransactionFraudCheckOutput | null;
