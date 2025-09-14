@@ -3,11 +3,12 @@
 import { z } from "zod";
 import {
   analyzePhishingEmail,
-  PhishingEmailAnalysisOutput,
+  PhishingEmailAnalysisInput,
 } from "@/ai/flows/phishing-email-analysis";
 import {
   analyzeUrlForPhishing,
   UrlPhishingAnalysisOutput,
+  UrlPhishingAnalysisInput,
 } from "@/ai/flows/url-phishing-analysis";
 import {
   transactionFraudCheck,
@@ -17,6 +18,7 @@ import {
   correlateThreatIntelligence,
   CorrelateThreatIntelligenceOutput,
 } from "@/ai/flows/threat-intelligence-correlation";
+import { PhishingEmailAnalysisOutput } from "@/ai/schemas/phishing-analysis";
 
 export type PhishingState = {
   data: PhishingEmailAnalysisOutput | null;

@@ -11,6 +11,10 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
+import {
+  type PhishingEmailAnalysisOutput,
+  PhishingEmailAnalysisOutputSchema,
+} from '@/ai/schemas/phishing-analysis';
 
 const PhishingEmailAnalysisInputSchema = z.object({
   emailContent: z
@@ -19,27 +23,6 @@ const PhishingEmailAnalysisInputSchema = z.object({
 });
 export type PhishingEmailAnalysisInput = z.infer<
   typeof PhishingEmailAnalysisInputSchema
->;
-
-export const PhishingEmailAnalysisOutputSchema = z.object({
-  isPhishing: z
-    .boolean()
-    .describe(
-      'Whether the email is likely a phishing attempt (true) or not (false).'
-    ),
-  reasoning: z
-    .string()
-    .describe(
-      'A detailed explanation of why the email is classified as phishing or not, including specific indicators found.'
-    ),
-  confidenceScore: z
-    .number()
-    .describe(
-      'A score between 0 and 1 indicating the confidence level of the phishing determination.'
-    ),
-});
-export type PhishingEmailAnalysisOutput = z.infer<
-  typeof PhishingEmailAnalysisOutputSchema
 >;
 
 export async function analyzePhishingEmail(

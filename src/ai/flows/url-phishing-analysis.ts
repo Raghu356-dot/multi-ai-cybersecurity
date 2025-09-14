@@ -14,7 +14,7 @@ import {z} from 'genkit';
 import {
   type PhishingEmailAnalysisOutput,
   PhishingEmailAnalysisOutputSchema,
-} from './phishing-email-analysis';
+} from '@/ai/schemas/phishing-analysis';
 
 const UrlPhishingAnalysisInputSchema = z.object({
   url: z.string().url().describe('The URL to analyze for phishing.'),
