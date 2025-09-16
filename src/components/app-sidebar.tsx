@@ -10,6 +10,14 @@ import {
   SidebarContent,
   SidebarFooter,
 } from "@/components/ui/sidebar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { CyberMindLogo } from "@/components/icons";
 import {
   Shield,
@@ -21,16 +29,23 @@ import {
   LogOut,
 } from "lucide-react";
 import { Separator } from "./ui/separator";
+import { Button } from "./ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 const links = [
   { href: "/", label: "Dashboard", icon: Shield },
   { href: "/phishing", label: "Phishing Analysis", icon: MailWarning },
   { href: "/fraud", label: "Fraud Detection", icon: CreditCard },
-  { href: "/threat-intelligence", label: "Threat Intelligence", icon: GitBranch },
+  {
+    href: "/threat-intelligence",
+    label: "Threat Intelligence",
+    icon: GitBranch,
+  },
 ];
 
 export function AppSidebar() {
   const pathname = usePathname();
+  const { toast } = useToast();
 
   return (
     <>
@@ -48,40 +63,66 @@ export function AppSidebar() {
         <SidebarMenu>
           {links.map((link) => (
             <SidebarMenuItem key={link.href}>
-                <SidebarMenuButton asChild isActive={pathname === link.href} className="w-full justify-start">
-                  <Link href={link.href}>
-                    <link.icon className="h-4 w-4" />
-                    <span>{link.label}</span>
-                  </Link>
-                </SidebarMenuButton>
+              <SidebarMenuButton
+                asChild
+                isActive={pathname === link.href}
+                className="w-full justify-start"
+              >
+                <Link href={link.href}>
+                  <link.icon className="h-4 w-4" />
+                  <span>{link.label}</span>
+                </Link>
+              </SidebarMenuButton>
             </SidebarMenuItem>
           ))}
         </SidebarMenu>
       </SidebarContent>
       <Separator className="my-2" />
       <SidebarFooter>
-         <SidebarMenu>
-            <SidebarMenuItem>
-                <SidebarMenuButton asChild isActive={pathname === "/settings"} className="w-full justify-start">
-                    <Link href="/settings">
-                        <Settings className="h-4 w-4" />
-                        <span>Settings</span>
-                    </Link>
-                </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-                <SidebarMenuButton variant="ghost" className="w-full justify-start text-muted-foreground hover:text-foreground">
-                    <UserCircle className="h-4 w-4" />
-                    <span>Admin User</span>
-                </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-                <SidebarMenuButton variant="ghost" className="w-full justify-start text-muted-foreground hover:text-foreground">
-                    <LogOut className="h-4 w-4" />
-                    <span>Logout</span>
-                </SidebarMenuButton>
-            </SidebarMenuItem>
-         </SidebarMenu>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              asChild
+              isActive={pathname === "/settings"}
+              className="w-full justify-start"
+            >
+              <Link href="/settings">
+                <Settings className="h-4 w-4" />
+                <span>Settings</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                className="w-full justify-start text-muted-foreground hover:text-foreground px-2"
+              >
+                <UserCircle className="h-4 w-4 mr-2" />
+                <span>Admin User</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56 mb-2 ml-2" side="top" align="start">
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                <UserCircle className="mr-2 h-4 w-4" />
+                <span>Profile</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() =>
+                  toast({
+                    title: "Coming Soon!",
+                    description: "Logout functionality is not yet implemented.",
+                  })
+                }
+              >
+                <LogOut className="mr-2 h-4 w-4" />
+                <span>Log out</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </SidebarMenu>
       </SidebarFooter>
     </>
   );
