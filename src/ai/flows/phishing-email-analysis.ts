@@ -15,6 +15,7 @@ import {
   type PhishingEmailAnalysisOutput,
   PhishingEmailAnalysisOutputSchema,
 } from '@/ai/schemas/phishing-analysis';
+import { analyzeUrlForPhishing } from './url-phishing-analysis';
 
 const PhishingEmailAnalysisInputSchema = z.object({
   emailContent: z
@@ -35,9 +36,11 @@ const phishingEmailAnalysisPrompt = ai.definePrompt({
   name: 'phishingEmailAnalysisPrompt',
   input: {schema: PhishingEmailAnalysisInputSchema},
   output: {schema: PhishingEmailAnalysisOutputSchema},
+  tools: [analyzeUrlForPhishing],
   prompt: `You are a cybersecurity expert specializing in phishing email detection.
   Analyze the email content provided and determine if it is a phishing attempt.
-  Provide a detailed reasoning for your determination, including specific indicators found in the email.
+  If you find any URLs in the email, use the analyzeUrlForPhishing tool to analyze them.
+  Provide a detailed reasoning for your determination, including specific indicators found in the email and the results of any URL scans.
   Also, provide a confidence score (0-1) for your analysis.
 
   Email Content: {{{emailContent}}}

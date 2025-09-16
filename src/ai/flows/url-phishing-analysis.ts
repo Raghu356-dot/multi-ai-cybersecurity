@@ -4,9 +4,9 @@
 /**
  * @fileOverview Analyzes a URL for phishing indicators.
  *
- * - analyzeUrlForPhishing - Analyzes the URL.
- * - UrlPhishingAnalysisInput - The input type for the analyzeUrlForPhishing function.
- * - UrlPhishingAnalysisOutput - The return type for the analyzeUrlForPhishing function.
+ * - analyzeUrlForPhishing - A tool that analyzes a URL for phishing indicators.
+ * - UrlPhishingAnalysisInput - The input type for the analyzeUrlForPhishing tool.
+ * - UrlPhishingAnalysisOutput - The return type for the analyzeUrlForPhishing tool.
  */
 
 import {ai} from '@/ai/genkit';
@@ -25,12 +25,6 @@ export type UrlPhishingAnalysisInput = z.infer<
 
 export type UrlPhishingAnalysisOutput = PhishingEmailAnalysisOutput;
 
-export async function analyzeUrlForPhishing(
-  input: UrlPhishingAnalysisInput
-): Promise<UrlPhishingAnalysisOutput> {
-  return urlPhishingAnalysisFlow(input);
-}
-
 const urlPhishingAnalysisPrompt = ai.definePrompt({
   name: 'urlPhishingAnalysisPrompt',
   input: {schema: UrlPhishingAnalysisInputSchema},
@@ -48,9 +42,10 @@ const urlPhishingAnalysisPrompt = ai.definePrompt({
   `,
 });
 
-const urlPhishingAnalysisFlow = ai.defineFlow(
+export const analyzeUrlForPhishing = ai.defineTool(
   {
-    name: 'urlPhishingAnalysisFlow',
+    name: 'analyzeUrlForPhishing',
+    description: 'Analyzes a URL for phishing indicators.',
     inputSchema: UrlPhishingAnalysisInputSchema,
     outputSchema: PhishingEmailAnalysisOutputSchema,
   },
