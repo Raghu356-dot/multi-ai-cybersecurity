@@ -6,13 +6,13 @@ import {
   CardContent,
   CardDescription,
   CardHeader,
-  CardTitle,
+  CardTitle
 } from "@/components/ui/card";
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-  ChartConfig,
+  ChartConfig
 } from "@/components/ui/chart";
 import { Pie, PieChart, Cell } from "recharts";
 

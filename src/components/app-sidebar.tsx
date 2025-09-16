@@ -10,14 +10,6 @@ import {
   SidebarContent,
   SidebarFooter,
 } from "@/components/ui/sidebar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { CyberMindLogo } from "@/components/icons";
 import {
   Shield,
@@ -25,12 +17,8 @@ import {
   CreditCard,
   GitBranch,
   Settings,
-  UserCircle,
-  LogOut,
 } from "lucide-react";
 import { Separator } from "./ui/separator";
-import { Button } from "./ui/button";
-import { useToast } from "@/hooks/use-toast";
 
 const links = [
   { href: "/", label: "Dashboard", icon: Shield },
@@ -45,7 +33,6 @@ const links = [
 
 export function AppSidebar() {
   const pathname = usePathname();
-  const { toast } = useToast();
 
   return (
     <>
@@ -92,36 +79,6 @@ export function AppSidebar() {
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                className="w-full justify-start text-muted-foreground hover:text-foreground px-2"
-              >
-                <UserCircle className="h-4 w-4 mr-2" />
-                <span>Admin User</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56 mb-2 ml-2" side="top" align="start">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <UserCircle className="mr-2 h-4 w-4" />
-                <span>Profile</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() =>
-                  toast({
-                    title: "Coming Soon!",
-                    description: "Logout functionality is not yet implemented.",
-                  })
-                }
-              >
-                <LogOut className="mr-2 h-4 w-4" />
-                <span>Log out</span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
         </SidebarMenu>
       </SidebarFooter>
     </>

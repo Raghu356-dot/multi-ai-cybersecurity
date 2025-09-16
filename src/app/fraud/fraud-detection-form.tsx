@@ -90,7 +90,7 @@ export function FraudDetectionForm() {
           )}
           {useFormStatus().pending && (
             <div className="flex flex-col items-center justify-center text-center text-muted-foreground p-8 border-2 border-dashed rounded-lg h-full">
-                <Loader2 className="h-12 w-12 mb-4 animate-spin text-primary" />
+                <Loader2 className="h-12 w-12 mb-4 animate-spin" />
                 <p>AI is assessing the risk...</p>
             </div>
           )}
