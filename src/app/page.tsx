@@ -21,7 +21,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { getPlaceholderImage } from "@/lib/placeholder-images";
 import { Button } from "@/components/ui/button";
 import { SystemStatusChart } from "@/components/system-status-chart";
 
@@ -66,7 +65,6 @@ const severityVariant: { [key: string]: "destructive" | "secondary" | "default" 
 };
 
 export default function Home() {
-  const threatMapImage = getPlaceholderImage("threat-map");
   return (
     <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
       <div className="flex items-center justify-between space-y-2">
@@ -172,26 +170,6 @@ export default function Home() {
         </Card>
         <SystemStatusChart />
       </div>
-      <Card>
-        <CardHeader>
-          <CardTitle className="font-headline">Global Threat Map</CardTitle>
-          <CardDescription>
-            Real-time visualization of detected cyber threats worldwide.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          {threatMapImage && (
-            <Image
-              src={threatMapImage.imageUrl}
-              alt={threatMapImage.description}
-              width={1200}
-              height={600}
-              className="w-full h-auto rounded-lg"
-              data-ai-hint={threatMapImage.imageHint}
-            />
-          )}
-        </CardContent>
-      </Card>
     </div>
   );
 }
